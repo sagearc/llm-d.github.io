@@ -383,8 +383,17 @@ html:not([data-theme='dark']) .footer-socials img {
   border: 1px solid var(--ifm-color-emphasis-200) !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-  overflow: hidden !important;
   display: table;
+  overflow: hidden !important;
+}
+
+@media (max-width: 996px) {
+  .markdown > table,
+  .markdown table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
 [data-theme='dark'] .markdown > table {
