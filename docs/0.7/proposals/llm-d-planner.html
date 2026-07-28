@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-0.7 docs-doc-page docs-doc-id-proposals/llm-d-planner" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.2">
+<title data-rh="true">An llm-d-planner for rapid llm-d configuration planning | llm-d</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://sagearc.github.io/llm-d.github.io/img/llm-d-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://sagearc.github.io/llm-d.github.io/img/llm-d-social-card.jpg"><meta data-rh="true" property="og:url" content="https://sagearc.github.io/llm-d.github.io/docs/0.7/proposals/llm-d-planner"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="0.7"><meta data-rh="true" name="docusaurus_tag" content="docs-default-0.7"><meta data-rh="true" name="docsearch:version" content="0.7"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-0.7"><meta data-rh="true" property="og:title" content="An llm-d-planner for rapid llm-d configuration planning | llm-d"><meta data-rh="true" name="description" content="Authors: Andre Fredette (Red Hat), Amit Oren (Red Hat), Jing Chen (IBM), Nick Masluk (IBM)"><meta data-rh="true" property="og:description" content="Authors: Andre Fredette (Red Hat), Amit Oren (Red Hat), Jing Chen (IBM), Nick Masluk (IBM)"><link data-rh="true" rel="icon" href="/llm-d.github.io/img/llm-d-favicon.png"><link data-rh="true" rel="canonical" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/proposals/llm-d-planner"><link data-rh="true" rel="alternate" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/proposals/llm-d-planner" hreflang="en"><link data-rh="true" rel="alternate" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/proposals/llm-d-planner" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"An llm-d-planner for rapid llm-d configuration planning","item":"https://sagearc.github.io/llm-d.github.io/docs/0.7/proposals/llm-d-planner"}]}</script><link rel="alternate" type="application/rss+xml" href="/llm-d.github.io/blog/rss.xml" title="llm-d RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/llm-d.github.io/blog/atom.xml" title="llm-d Atom Feed"><link rel="stylesheet" href="/llm-d.github.io/assets/css/styles.b83d42ef.css">
+<script src="/llm-d.github.io/assets/js/runtime~main.cb58213d.js" defer="defer"></script>
+<script src="/llm-d.github.io/assets/js/main.4e5fa13b.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())</script><div id="__docusaurus"><link rel="preload" as="image" href="/llm-d.github.io/img/llm-d-logotype-and-icon.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/llm-d-logotype-and-icon-dark.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/cncf-color.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/cncf-white.png"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><div class="theme-announcement-bar announcementBar_mb4j" style="color:#ffffff" role="banner"><div class="announcementBarPlaceholder_vyr4"></div><div class="content_knG7 announcementBarContent_xLdY">🎉 <b>llm-d 0.8 is here!</b> Multimodal, batch &amp; flow-control graduate to production, with broader accelerator support and initial RL. <a href="/docs/getting-started/quickstart"><b>See what's new →</b></a></div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/llm-d.github.io/"><div class="navbar__logo"><img src="/llm-d.github.io/img/llm-d-logotype-and-icon.svg" alt="llm-d" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/llm-d.github.io/img/llm-d-logotype-and-icon-dark.svg" alt="llm-d" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/llm-d.github.io/docs">Docs</a><a class="navbar__item navbar__link" href="/llm-d.github.io/blog">Blog</a><a class="navbar__item navbar__link" href="/llm-d.github.io/community">Contributing</a><div class="navbar__item dropdown dropdown--hoverable"><a class="navbar__link" aria-haspopup="true" aria-expanded="false" role="button" href="/llm-d.github.io/docs/0.7/proposals/llm-d-planner">v0.7</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/llm-d.github.io/docs">v0.8 (latest)</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/llm-d.github.io/docs/0.7/proposals/llm-d-planner">v0.7</a></li><li><a class="dropdown__link" href="/llm-d.github.io/docs/dev">dev</a></li></ul></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/llm-d/llm-d" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-github-stars" aria-label="GitHub repository"><span class="header-github-stars__icon" aria-hidden="true"></span></a><a href="https://llm-d.ai/slack" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-slack-link" aria-label="llm-d Slack">Join Slack<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7"><span class="categoryLinkLabel_W154">Getting Started</span></a><button aria-label="Collapse sidebar category &#x27;Getting Started&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/getting-started/quickstart"><span class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/accelerators"><span class="linkLabel_WmDU">Supported Accelerators</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/getting-started/artifacts"><span class="linkLabel_WmDU">Artifacts</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/well-lit-paths"><span class="categoryLinkLabel_W154">Well-Lit Paths</span></a><button aria-label="Collapse sidebar category &#x27;Well-Lit Paths&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/optimized-baseline"><span class="linkLabel_WmDU">Optimized Baseline</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/predicted-latency"><span class="linkLabel_WmDU">Predicted Latency-Based Scheduling</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/precise-prefix-cache-aware"><span class="linkLabel_WmDU">Precise Prefix Cache Aware Routing</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/tiered-prefix-cache"><span class="linkLabel_WmDU">Tiered Prefix Cache</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/pd-disaggregation"><span class="linkLabel_WmDU">P/D Disaggregation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/wide-expert-parallelism"><span class="linkLabel_WmDU">Multi-Node Wide Expert Parallelism</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/flow-control"><span class="linkLabel_WmDU">Flow Control</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/workload-autoscaling"><span class="linkLabel_WmDU">Workload Autoscaling</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/asynchronous-processing"><span class="linkLabel_WmDU">Asynchronous Processing</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/experimental/batch-gateway"><span class="linkLabel_WmDU">Batch Gateway</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/architecture"><span class="categoryLinkLabel_W154">Concepts (Architecture)</span></a><button aria-label="Expand sidebar category &#x27;Concepts (Architecture)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/monitoring"><span class="categoryLinkLabel_W154">Operations &amp; Monitoring</span></a><button aria-label="Expand sidebar category &#x27;Operations &amp; Monitoring&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/llm-d.github.io/docs/0.7/infra-providers"><span class="categoryLinkLabel_W154">Infrastructure &amp; Environments</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/api-reference"><span class="categoryLinkLabel_W154">References</span></a><button aria-label="Expand sidebar category &#x27;References&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/llm-d.github.io/docs/0.7/proposals/llm-d"><span class="categoryLinkLabel_W154">Proposals</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/llm-d"><span class="linkLabel_WmDU">llm-d: Kubernetes-native Distributed Inference at Scale</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/autoscaler"><span class="linkLabel_WmDU">autoscaler</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/coordinator"><span class="linkLabel_WmDU">coordinator</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/distributed-tracing"><span class="linkLabel_WmDU">Distributed Tracing for llm-d</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/inference-resilience-operator"><span class="linkLabel_WmDU">Inference Resilience Operator (IRO): automated hardware fault recovery for wide-EP deployments</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/llm-d-inference-payload-processor"><span class="linkLabel_WmDU">llm-d-inference-payload-processor</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/llm-d-planner"><span class="linkLabel_WmDU">An llm-d-planner for rapid llm-d configuration planning</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/llm-d-skills"><span class="linkLabel_WmDU">llm-d-skills for accelerated task automation and standardized workflows</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/modelservice"><span class="linkLabel_WmDU">ModelService: Declarative Inference Serving on llm-d</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/prism-performance-analysis"><span class="linkLabel_WmDU">Proposal: Prism - Performance analysis for distributed inference systems</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/proposals/PROPOSAL_TEMPLATE"><span class="linkLabel_WmDU">PROPOSAL_TEMPLATE</span></a></li></ul></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="theme-doc-version-banner alert alert--warning margin-bottom--md" role="alert"><div>This is documentation for <!-- -->llm-d<!-- --> <b>v0.7</b>, which is no longer actively maintained.</div><div class="margin-top--md">For up-to-date documentation, see the <b><a href="/llm-d.github.io/docs">latest version</a></b> (<!-- -->v0.8 (latest)<!-- -->).</div></div><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/llm-d.github.io/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Proposals</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">An llm-d-planner for rapid llm-d configuration planning</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: v0.7</span><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>An llm-d-planner for rapid llm-d configuration planning</h1></header>
+<p><strong>Authors</strong>: Andre Fredette (<em>Red Hat</em>), Amit Oren (<em>Red Hat</em>), Jing Chen (<em>IBM</em>), Nick Masluk (<em>IBM</em>)</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary">Summary<a href="#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary" translate="no">​</a></h2>
+<p><a href="https://github.com/llm-d/llm-d-benchmark/tree/main/config_explorer" target="_blank" rel="noopener noreferrer" class=""><em>Config Explorer</em></a>
+is a capacity planning tool within llm-d-benchmark that estimates GPU memory
+requirements, evaluates parallelism strategies, and recommends cost-effective
+hardware configurations using roofline analysis.
+<a href="https://github.com/redhat-et/neuralnav" target="_blank" rel="noopener noreferrer" class=""><em>NeuralNav</em></a> is a tool that guides
+users from natural-language requirements through SLO target generation,
+model-GPU recommendations based on real benchmarks, Kubernetes manifest
+creation, and one-click deployment.</p>
+<p>The following are presentations given during recent llm-d sig-benchmarking calls for additional info:</p>
+<ul>
+<li class=""><a href="https://drive.google.com/file/d/1Ywlgjd1lz44OzLSJMH5UN8gxdsMHersv" target="_blank" rel="noopener noreferrer" class="">llm-d sig-benchmarking call, 3/10/2026</a>
+<ul>
+<li class=""><em>NeuralNav</em> demo: 2:39-8:28</li>
+<li class="">Questions/Discussion: 8:28-15:45</li>
+<li class="">Overview of integration w/<em>Config Explorer</em>: 15:45-21:38</li>
+</ul>
+</li>
+<li class=""><a href="https://www.youtube.com/watch?v=Y26i69zI6Ag" target="_blank" rel="noopener noreferrer" class="">llm-d sig-benchmarking call, 1/27/2026</a>
+<ul>
+<li class=""><em>Config Explorer</em> demo</li>
+</ul>
+</li>
+</ul>
+<p>Platform teams deploying LLMs on llm-d today must navigate a multitude of
+interacting configuration knobs across llm-d components, with no single tool
+that reasons across all of them. <em>Config Explorer</em> handles the hardware side well
+(memory estimation, roofline modeling, GPU ranking) but cannot capture business
+requirements or generate deployments. <em>NeuralNav</em> handles the user side well
+(conversational intent gathering, manifest generation, one-click deployment) but
+lacks the analytical depth to reason about configuration trade-offs.</p>
+<p>This proposal unifies the two into <strong>llm-d-planner</strong>: <em>NeuralNav</em> serves as the
+user-facing orchestration layer while <em>Config Explorer</em> serves as the
+recommendation engine underneath. The combined system uses real benchmark data
+when an exact match exists and falls back to performance estimates when it does
+not, eliminating the costly trial-and-error that platform teams face today.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="motivation">Motivation<a href="#motivation" class="hash-link" aria-label="Direct link to Motivation" title="Direct link to Motivation" translate="no">​</a></h2>
+<p>Deploying LLMs and LLM-serving stacks like llm-d remains a costly
+trial-and-error process. Platform engineering teams today must choose across
+models, hardware options, vLLM engine parameters, inference-scheduler and scorer
+settings, prefill-decode disaggregation jobs, and autoscaling policies. Each
+component has its own trade-off against latency, throughput, accuracy, and cost.
+The plethora of configuration dimensions makes it difficult for teams to know
+how to deploy an llm-d stack that meets their business requirements without
+expensive experimentation.</p>
+<p>Real benchmark data exists in <em>llm-d-benchmark</em>, but it is hard to search and
+harder to map to a specific business scenario. Worse, there is no guarantee that
+a benchmark matching a team&#x27;s exact model, hardware, and workload combination
+has ever been run, as it is costly to do so. Teams are left choosing between
+incomplete data and blind experimentation.</p>
+<p>Today, <em>llm-d-benchmark</em>&#x27;s <em>Config Explorer</em> module addresses part of the
+problem. Given a model and workload, it estimates GPU memory, evaluates
+parallelism strategies, and recommends the most cost-effective hardware
+configuration. It is grounded in empirically validated memory models, but it
+stops at the infrastructure boundary. It does not capture business-level
+requirements, generate deployment manifests, or orchestrate the serving stack.</p>
+<p><em>NeuralNav</em> solves the deployment guidance problem. It walks users from a
+natural-language description of their use case through SLO target generation,
+model-GPU recommendation, Kubernetes manifest creation, and one-click
+deployment. Its recommendations, however, rely on pre-existing benchmark data
+and cannot reason about model-hardware combinations that have not been
+benchmarked or explore the full llm-d configuration space.</p>
+<p>This results in a gap in the end-to-end workflow:</p>
+<ol>
+<li class=""><strong>Configuration complexity</strong>: platform teams face dozens of interacting knobs
+(vLLM, inference scheduler, P/D, autoscaler) with no tool that reasons across
+all of them jointly.</li>
+<li class=""><strong>Benchmark data that is hard to leverage</strong>: real results exist but are
+difficult to discover and filter to a team&#x27;s specific business requirement.
+Many scenarios also have no benchmark coverage at all.</li>
+<li class=""><strong>Prefill/decode disaggregation deployment difficulty</strong>: as a core llm-d
+topology, P/D disaggregation requires careful configuration of each worker
+pod, parallelism strategies, KV cache transfer configuration, and more. No
+existing tool provides a unified recommendation for P/D splits for llm-d.</li>
+<li class=""><strong>Fragmented tooling</strong>: users need to context-switch between separate tools
+for capacity planning and deployment and have to manually transfer parameters
+and assumptions.</li>
+<li class=""><strong>No closed feedback loop</strong>: neither tool alone connects pre-deployment
+estimation to post-deployment benchmark results, so configuration choices are
+never validated against real serving performance.</li>
+<li class=""><strong>Duplicated efforts</strong>: both projects independently maintain GPU databases,
+cost tables, and performance heuristics that drift out of sync.</li>
+</ol>
+<p>Connecting the two projects into a unified planner would close the gap. Platform
+teams get a single path from business need to recommended configuration, backed
+by either a real benchmark when one exists, or by an accurate performance
+estimation model when it does not exist. The result is a realistic expectation
+of the best configurations for the team&#x27;s requirements, without the
+trial-and-error expense.</p>
+<p>A key advantage of the integrated planner is that it enables several reinforcing
+feedback loops, each closing a gap that exists when the tools operate in
+isolation.</p>
+<ol>
+<li class=""><strong>Deployment validation loop</strong>: after a recommended configuration is
+deployed, live serving metrics are compared against the pre-deployment
+estimates. When the serving stack meets or exceeds expectation, the result is
+recorded as a valid benchmark. When it falls short, the deviation is surfaced
+to the user with revised recommendations.</li>
+<li class=""><strong>Workload adaptation loop</strong>: traffic patterns shift over time. Continuous
+monitoring of the live stack detects these shifts and triggers re-evaluation
+of the current configuration. We can leverage llm-d-observability and the
+workload-variant-autoscaler for this purpose.</li>
+<li class=""><strong>Estimation accuracy loop</strong>: every pair of predicted performance and actual
+benchmark result becomes a training signal for the inference performance
+estimation engine. As real serving performance data flows back, the
+recommendations become more accurate next time.</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="goals">Goals<a href="#goals" class="hash-link" aria-label="Direct link to Goals" title="Direct link to Goals" translate="no">​</a></h3>
+<ul>
+<li class="">Unify <em>Config Explorer</em> and <em>NeuralNav</em> into a single <strong>llm-d-planner</strong> tool that
+takes platform teams from business requirements to running llm-d deployments.</li>
+<li class="">Replace <em>NeuralNav</em> s coarse recommendation engine with <em>Config Explorer</em>&#x27;s
+architecture-aware memory estimation, roofline analysis, and GPU ranking.</li>
+<li class="">Use real benchmark data when an exact match exists and fall back to
+performance estimates when it does not. Work with the Prism project to
+converge on a common benchmark database format.</li>
+<li class="">Support prefill/decode disaggregation configuration as a first-class
+deployment topology.</li>
+<li class="">Close the feedback loop between pre-deployment estimates and post-deployment
+benchmark results.</li>
+<li class="">Design a pluggable interface for inference performance estimation engines,
+leveraging existing open-source tools where possible.</li>
+<li class="">Allow pathways for integrations with benchmark visualization and analysis
+tools.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="non-goals">Non-Goals<a href="#non-goals" class="hash-link" aria-label="Direct link to Non-Goals" title="Direct link to Non-Goals" translate="no">​</a></h3>
+<ul>
+<li class="">Replacing either project&#x27;s existing capabilities wholesale; the integration
+builds on each project&#x27;s strengths.</li>
+<li class="">Building a new UI framework from scratch; the existing NeuralNav
+conversational interface is reused.</li>
+<li class="">Providing benchmark data analysis or comprehensive visualizations. While
+benchmark data will be used to assist with making configuration
+recommendations to a user, neither <em>NeuralNav</em> nor <em>Config Explorer</em> is meant to
+be a primary interface for exploring or analyzing benchmark results.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="proposal">Proposal<a href="#proposal" class="hash-link" aria-label="Direct link to Proposal" title="Direct link to Proposal" translate="no">​</a></h2>
+<p>The unified project will live in a new <code>llm-d/llm-d-planner</code> repository. Because
+Config Explorer already lives in llm-d-benchmark, a core llm-d repository, and
+the planner directly serves the llm-d deployment workflow, the new repository
+belongs in the <code>llm-d</code> organization rather than <code>llm-d-incubation</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="complementary-capabilities">Complementary Capabilities<a href="#complementary-capabilities" class="hash-link" aria-label="Direct link to Complementary Capabilities" title="Direct link to Complementary Capabilities" translate="no">​</a></h3>
+<p>The two projects cover mostly distinct and largely non-overlapping parts of the
+configuration search and deployment lifecycle. The table below summarizes the
+capabilities that each project owns.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th style="text-align:center">Config Explorer</th><th style="text-align:center">NeuralNav</th></tr></thead><tbody><tr><td>Architecture-aware memory estimation (attention, MoE vs. dense vs. multimodal, quantization sizing, parallelism strategy evaluation)</td><td style="text-align:center">✔</td><td style="text-align:center"></td></tr><tr><td>Roofline-based throughput/latency profiling</td><td style="text-align:center">✔</td><td style="text-align:center"></td></tr><tr><td>Performance- and cost-optimized GPU recommendation</td><td style="text-align:center">✔</td><td style="text-align:center"></td></tr><tr><td>Empirically validated against real vLLM profiling data</td><td style="text-align:center">✔</td><td style="text-align:center"></td></tr><tr><td>Conversational requirements gathering (natural language to SLOs)</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Business use cases to traffic profile mapping</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Model accuracy and quality scoring</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Multi-criteria ranking (Accuracy, Cost, Performance, etc.)</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Kubernetes manifest generation</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>One-click deployment to local or production clusters</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Live inference testing and deployment monitoring</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr><tr><td>Benchmark data persistence</td><td style="text-align:center"></td><td style="text-align:center">✔</td></tr></tbody></table>
+<p>Where each tool is strong and absent:</p>
+<ul>
+<li class=""><em>Config Explorer</em> knows how a model maps to hardware but not why the user needs
+it or what to do once the configuration is chosen.</li>
+<li class=""><em>NeuralNav</em> knows what the user wants and how to deploy it, but its performance
+estimates are coarse. It also requires real hardware for unexplored
+territories, which is costly if the user just wants to get a simple
+understanding of performance expectations.</li>
+</ul>
+<p>An integrated system inherits both strengths: <em>NeuralNav</em> s conversational
+frontend and deployment automation serves as the user-friendly frontend layer,
+while <em>Config Explorer</em>&#x27;s memory models and roofline analysis become the
+recommendation engine underneath. Neither project should need to rewrite the
+capabilities the other already provides.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="integration-architecture">Integration Architecture<a href="#integration-architecture" class="hash-link" aria-label="Direct link to Integration Architecture" title="Direct link to Integration Architecture" translate="no">​</a></h3>
+<p>The integration connects <em>Config Explorer</em>&#x27;s estimation backend with NeuralNav&#x27;s
+user-facing orchestration layer. Data flows bidirectionally between systems
+while preserving modular independence.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Component</th><th>Source</th><th>Function</th></tr></thead><tbody><tr><td>Presentation</td><td>Conversational UI</td><td><em>NeuralNav</em></td><td>Requirements gathering + better user experience</td></tr><tr><td>Orchestration</td><td>Specification service</td><td><em>NeuralNav</em></td><td>Intent to SLO and traffic profile mapping</td></tr><tr><td>Recommendation</td><td>Config Explorer API</td><td><em>NeuralNav</em> and <em>Config Explorer</em></td><td><em>NeuralNav</em> for existing benchmarks; <em>Config Explorer</em> for un-benchmarked configurations</td></tr><tr><td>Knowledge</td><td>Benchmark Store</td><td><em>NeuralNav</em>  llm-d-benchmark, llm-d Results Store &amp; Analysis</td><td>Provide performance truth based on a community-driven database of llm-d benchmarks</td></tr><tr><td>Deployment</td><td>Kubernetes</td><td><em>NeuralNav</em></td><td>Manifest generation, cluster orchestration</td></tr><tr><td>Monitoring</td><td>Kubernetes</td><td><em>NeuralNav</em>  llm-d-observability</td><td>Live monitoring of llm-d stack health</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="user-stories">User Stories<a href="#user-stories" class="hash-link" aria-label="Direct link to User Stories" title="Direct link to User Stories" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="user-story-1-model-deployment-into-development-environment">User Story 1: model deployment into development environment<a href="#user-story-1-model-deployment-into-development-environment" class="hash-link" aria-label="Direct link to User Story 1: model deployment into development environment" title="Direct link to User Story 1: model deployment into development environment" translate="no">​</a></h4>
+<p>A platform engineer needs to deploy a code-generation LLM for their development
+team. They describe their use case in natural language, and <em>llm-d-planner</em>
+extracts SLO targets, evaluates model-hardware combinations using <em>Config
+Explorer</em>&#x27;s roofline analysis, and presents ranked recommendations labeled as
+&quot;Estimated&quot; or &quot;Benchmarked&quot;. They select a configuration and deploy it with one
+click.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="user-story-2-deployment-re-configuration-post-re-evaluation">User Story 2: deployment re-configuration post re-evaluation<a href="#user-story-2-deployment-re-configuration-post-re-evaluation" class="hash-link" aria-label="Direct link to User Story 2: deployment re-configuration post re-evaluation" title="Direct link to User Story 2: deployment re-configuration post re-evaluation" translate="no">​</a></h4>
+<p>A team is running an llm-d deployment and traffic patterns have shifted. The
+monitoring layer detects the shift and triggers re-evaluation. <em>llm-d-planner</em>
+suggests an updated configuration with a different P/D split ratio, and the team
+can review and apply the change.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="design-details">Design Details<a href="#design-details" class="hash-link" aria-label="Direct link to Design Details" title="Direct link to Design Details" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="short-term-unified-recommendation-engine">Short-term: unified recommendation engine<a href="#short-term-unified-recommendation-engine" class="hash-link" aria-label="Direct link to Short-term: unified recommendation engine" title="Direct link to Short-term: unified recommendation engine" translate="no">​</a></h3>
+<p>The integration is not a simple swap. <em>NeuralNav</em> already has a working
+recommendation path. The goal is to have <em>Config Explorer</em>&#x27;s backend power the
+pieces <em>NeuralNav</em> currently lacks: architecture-aware memory estimation,
+quantization-aware sizing, parallelism strategy evaluation and roofline-based
+throughput/latency modeling.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Milestone</th><th>Description</th><th>Deliverable</th></tr></thead><tbody><tr><td>Extract <em>Config Explorer</em> into standalone repo</td><td>Separate from llm-d-benchmark monorepo into standalone package with versioned releases</td><td>llm-d/llm-d-planner repo with <em>Config Explorer</em> as standalone package</td></tr><tr><td>Move <em>NeuralNav</em> into <em>llm-d-planner</em></td><td>Integrate <em>NeuralNav</em> alongside <em>Config Explorer</em> as a separate component</td><td><code>llm-d/llm-d-planner</code> repo with <em>NeuralNav</em> integrated</td></tr><tr><td>UI and API integration</td><td>Bridge a single interface from business intent extraction to llm-d deployment</td><td>Unified frontend and API server backend</td></tr><tr><td>Converge on common benchmark data format</td><td>Adopt llm-d-benchmark v2 benchmark report schema in <em>NeuralNav</em></td><td>Agreement on API interfaces</td></tr><tr><td>Hybrid recommendation</td><td>Augment <em>NeuralNav</em>&#x27;s benchmark-based recommendations with <em>Config Explorer</em>&#x27;s roofline + memory estimation for un-benchmarked configurations</td><td>Recommendation view shows &quot;Benchmarked&quot; or &quot;Estimated&quot; labels per config</td></tr><tr><td>Inference estimation engine integration (phase 1)</td><td>Integrate an inference performance estimation engine to enable configuration sweeps without running real benchmarks. Open-source tools like <a href="https://github.com/inference-sim/inference-sim" target="_blank" rel="noopener noreferrer" class="">BLIS</a> already exist for this purpose.</td><td>Pluggable interface for inference estimation engines</td></tr><tr><td>P/D disaggregation knobs search</td><td>End-to-end configuration for P/D deployments: TP, DP arguments, P and D replicas, and KV-cache transfer strategy</td><td>Data-backed P/D split configurations for llm-d</td></tr><tr><td>Kubernetes deployment generator</td><td>Generate deployable Kubernetes artifacts from a recommended configuration. Output format (e.g., Kustomize overlays or plain YAML) is a design decision to be determined in a future iteration.</td><td>Manifest generation engine for recommended configurations</td></tr><tr><td>Blog post on llm-d-planner</td><td>Document the llm-d-planner journey and capabilities</td><td>Public validation of approach and community feedback</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="mid-term-expand-knob-space-search-and-real-benchmarking">Mid-term: expand knob-space search and real benchmarking<a href="#mid-term-expand-knob-space-search-and-real-benchmarking" class="hash-link" aria-label="Direct link to Mid-term: expand knob-space search and real benchmarking" title="Direct link to Mid-term: expand knob-space search and real benchmarking" translate="no">​</a></h3>
+<p><u>Objective</u>: expand the recommendation surface from hardware selection to full
+serving-stack tuning including vLLM knobs, inference-scheduler knobs, and P/D
+disaggregation, backed by real vLLM or llm-d benchmark runs.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Milestone</th><th>Description</th><th>Deliverable</th></tr></thead><tbody><tr><td>Inference scheduler and scoring search (estimation engine phase 2)</td><td>Extend configuration search to inference scheduler and scoring weights</td><td>Present performance data (real or estimated) for optimized baseline-driven configuration comparison</td></tr><tr><td>Benchmark-backed validation</td><td>Run llm-d benchmark sweeps for each recommendation configuration. Stores results (local or publicly managed DB by llm-d)</td><td>Closes feedback loop. Estimations are compared to real throughput/latency</td></tr><tr><td>Multi-model and agentic workflow support</td><td>Support more complex use cases such as multi-model and agentic workflows</td><td>Recommendation engine handles multi-model topologies with per-model configuration and cross-model resource optimization</td></tr><tr><td>Blog posts</td><td>Planning and search across vLLM + inference scheduler knobs with real results.</td><td>Continued public validation of approach, community feedback loop, and impact</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="long-term-simulation-driven-dynamic-tuning">Long-term: simulation-driven dynamic tuning<a href="#long-term-simulation-driven-dynamic-tuning" class="hash-link" aria-label="Direct link to Long-term: simulation-driven dynamic tuning" title="Direct link to Long-term: simulation-driven dynamic tuning" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Milestone</th><th>Deliverable</th><th>Impact</th></tr></thead><tbody><tr><td>Improve accuracy and quality scoring into recommendation engine</td><td>Incorporate <em>NeuralNav</em>&#x27;s scoring algorithm and enable data-driven discovery of optimal scoring strategies</td><td>Consumable scoring for llm-d-planner users</td></tr><tr><td>Dynamic tuning for workload adaptation</td><td>Estimation-engine-trained tuning algorithm adapts scheduler parameters to shifting workload patterns in real time</td><td>Deployments self-optimize as traffic changes</td></tr><tr><td>Dynamic tuning for PD adaptation</td><td>Extend dynamic tuning to PD, adapting on request shape</td><td>Handles mixed short/long context traffic without manual retuning</td></tr><tr><td>LoRA load balancing</td><td>LoRA adapter routing and balancing</td><td>Supports multi-tenant LoRA serving at scale</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="expected-impact">Expected Impact<a href="#expected-impact" class="hash-link" aria-label="Direct link to Expected Impact" title="Direct link to Expected Impact" translate="no">​</a></h3>
+<p><strong>For llm-d ecosystem:</strong></p>
+<ul>
+<li class=""><strong><em>Config Explorer</em> as a shared service</strong>: extracting it to a standalone repo
+with a stable API makes capacity planning reusable across llm-d tooling, not
+just <em>NeuralNav</em> but any component that needs to reason about model-hardware
+fit.</li>
+<li class=""><strong>Pluggable estimation backends</strong>: The provider interface for inference
+estimation engines invites external contributors to add new modeling
+approaches without forking the stack.</li>
+<li class=""><strong>Closed feedback loop</strong>: benchmark results flow back to the recommendation
+engine so estimate accuracy improves with every deployment rather than staying
+the same.</li>
+</ul>
+<p><strong>For platform teams deploying LLMs and llm-d serving stacks:</strong></p>
+<ul>
+<li class=""><strong>Fewer failed deployments</strong> given architecture-aware memory estimation that
+catches OOM conditions and under-provisioned configs before anything is
+scheduled.</li>
+<li class=""><strong>Lower GPU cost</strong>: joint optimization across hardware selection, parallelism
+strategies, and serving-stack knobs surfaces configurations that meet SLOs at
+minimum cost rather than defaulting to the largest GPU.</li>
+<li class=""><strong>Faster time-to-production</strong>: a single workflow from natural language
+requirements to running deployment eliminates the manual handoff between
+business requirement mapping, capacity planning, and infrastructure
+provisioning.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="risks-and-mitigation-strategies">Risks and Mitigation Strategies<a href="#risks-and-mitigation-strategies" class="hash-link" aria-label="Direct link to Risks and Mitigation Strategies" title="Direct link to Risks and Mitigation Strategies" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>vLLM / serving-stack drift</strong>: vLLM&#x27;s configuration surface changes across
+releases; knob-space search results can go stale. Mitigation: Pin
+recommendations to tested vLLM versions. Add a version compatibility field to
+every stored benchmark result so stale data is never silently applied.</li>
+<li class=""><strong>Community adoption friction</strong>: Two projects with different installation
+paths and UIs may deter contributors. Mitigation: Ship a single API and
+developer environment that stand up both projects together. Maintain a unified
+getting-started guide.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="alternatives">Alternatives<a href="#alternatives" class="hash-link" aria-label="Direct link to Alternatives" title="Direct link to Alternatives" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="status-quo-manual-trial-and-error">Status quo: manual trial and error<a href="#status-quo-manual-trial-and-error" class="hash-link" aria-label="Direct link to Status quo: manual trial and error" title="Direct link to Status quo: manual trial and error" translate="no">​</a></h3>
+<p>Platform teams continue to select models, GPU types, parallelism strategies, and
+serving-stack parameters through experimentation. Each iteration requires
+provisioning real hardware, running benchmarks, and interpreting results before
+trying the next combination. This approach works eventually but is expensive in
+both GPU-hours and engineer time especially when the configuration space
+includes vLLM knobs, inference-scheduler settings, and P/D disaggregation
+options. It also means teams without large GPU budgets cannot explore the space
+at all and default to over-provisioned, costly configurations.</p>
+<p>This was ruled out because the whole point of the planner is to eliminate this
+cost. Trial and error does not scale as the number of configuration dimensions
+grows with each llm-d release.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="keep-config-explorer-and-neuralnav-as-separate-tools">Keep Config Explorer and NeuralNav as separate tools<a href="#keep-config-explorer-and-neuralnav-as-separate-tools" class="hash-link" aria-label="Direct link to Keep Config Explorer and NeuralNav as separate tools" title="Direct link to Keep Config Explorer and NeuralNav as separate tools" translate="no">​</a></h3>
+<p>Teams could use <em>Config Explorer</em> for hardware sizing and then manually transfer
+its outputs (GPU type, count, parallelism strategy) into <em>NeuralNav</em> for
+deployment manifest generation. This preserves each project&#x27;s independence and
+avoids integration work.</p>
+<p>This was ruled out because the manual handoff between tools is error-prone and
+defeats the goal of a single workflow. Users must context-switch between
+different interfaces, re-enter parameters, and reconcile assumptions that may
+differ between the two tools (e.g. different GPU cost tables or model naming
+conventions). The feedback loop also remains broken since neither tool sees the
+other&#x27;s results.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="build-estimation-capabilities-directly-into-neuralnav">Build estimation capabilities directly into NeuralNav<a href="#build-estimation-capabilities-directly-into-neuralnav" class="hash-link" aria-label="Direct link to Build estimation capabilities directly into NeuralNav" title="Direct link to Build estimation capabilities directly into NeuralNav" translate="no">​</a></h3>
+<p>Instead of integrating <em>Config Explorer</em>, <em>NeuralNav</em> could develop its own memory
+estimation, roofline modeling, and parallelism evaluation from scratch. This
+would keep the project self-contained with no external dependency.</p>
+<p>This was ruled out because it duplicates work that <em>Config Explorer</em> has already
+done and validated against real vLLM profiling data. Building and maintaining
+accurate memory models for diverse architectures (MoE, dense, multimodal) and
+quantization schemes is a substantial ongoing effort. Leveraging Config
+Explorer&#x27;s existing, empirically validated models avoids this duplication and
+lets both teams focus on their respective strengths.</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/llm-d.github.io/docs/0.7/proposals/llm-d-inference-payload-processor"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">llm-d-inference-payload-processor</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/llm-d.github.io/docs/0.7/proposals/llm-d-skills"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">llm-d-skills for accelerated task automation and standardized workflows</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#summary" class="table-of-contents__link toc-highlight">Summary</a></li><li><a href="#motivation" class="table-of-contents__link toc-highlight">Motivation</a><ul><li><a href="#goals" class="table-of-contents__link toc-highlight">Goals</a></li><li><a href="#non-goals" class="table-of-contents__link toc-highlight">Non-Goals</a></li></ul></li><li><a href="#proposal" class="table-of-contents__link toc-highlight">Proposal</a><ul><li><a href="#complementary-capabilities" class="table-of-contents__link toc-highlight">Complementary Capabilities</a></li><li><a href="#integration-architecture" class="table-of-contents__link toc-highlight">Integration Architecture</a></li><li><a href="#user-stories" class="table-of-contents__link toc-highlight">User Stories</a></li></ul></li><li><a href="#design-details" class="table-of-contents__link toc-highlight">Design Details</a><ul><li><a href="#short-term-unified-recommendation-engine" class="table-of-contents__link toc-highlight">Short-term: unified recommendation engine</a></li><li><a href="#mid-term-expand-knob-space-search-and-real-benchmarking" class="table-of-contents__link toc-highlight">Mid-term: expand knob-space search and real benchmarking</a></li><li><a href="#long-term-simulation-driven-dynamic-tuning" class="table-of-contents__link toc-highlight">Long-term: simulation-driven dynamic tuning</a></li><li><a href="#expected-impact" class="table-of-contents__link toc-highlight">Expected Impact</a></li><li><a href="#risks-and-mitigation-strategies" class="table-of-contents__link toc-highlight">Risks and Mitigation Strategies</a></li></ul></li><li><a href="#alternatives" class="table-of-contents__link toc-highlight">Alternatives</a><ul><li><a href="#status-quo-manual-trial-and-error" class="table-of-contents__link toc-highlight">Status quo: manual trial and error</a></li><li><a href="#keep-config-explorer-and-neuralnav-as-separate-tools" class="table-of-contents__link toc-highlight">Keep Config Explorer and NeuralNav as separate tools</a></li><li><a href="#build-estimation-capabilities-directly-into-neuralnav" class="table-of-contents__link toc-highlight">Build estimation capabilities directly into NeuralNav</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/docs" class="footer__link-item">Getting Started</a></li><li class="footer__item"><a href="/docs/architecture" class="footer__link-item">Architecture</a></li><li class="footer__item"><a href="/docs/well-lit-paths" class="footer__link-item">Well-Lit Paths</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/community" class="footer__link-item">Contact us</a></li><li class="footer__item"><a href="/community/contribute" class="footer__link-item">Contributing</a></li><li class="footer__item"><a href="/community/code-of-conduct" class="footer__link-item">Code of Conduct</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/blog" class="footer__link-item">Blog</a></li><li class="footer__item"><a href="https://www.redhat.com/en/about/privacy-policy" target="_blank" rel="noopener noreferrer" class="footer__link-item">Privacy Policy<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Social</div><ul class="footer__items clean-list"><li class="footer__item">
+                <div class="footer-socials" role="navigation" aria-label="Social links">
+                  <div class="footer-socials-row">
+                    <a href="https://github.com/llm-d/" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+                      <img src="/img/new-social/github-mark-white.png" alt="GitHub">
+                    </a>
+                    <a href="https://linkedin.com/company/llm-d" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+                      <img src="/img/new-social/linkedin-mark-white.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://llm-d.slack.com" target="_blank" rel="noreferrer noopener" aria-label="Slack">
+                      <img src="/img/new-social/slack-mark-white.png" alt="Slack">
+                    </a>
+                    <a href="https://www.reddit.com/r/llm_d/" target="_blank" rel="noreferrer noopener" aria-label="Reddit">
+                      <img src="/img/new-social/reddit-mark-white.png" alt="Reddit">
+                    </a>
+                    <a href="https://bsky.app/profile/llm-d.ai" target="_blank" rel="noreferrer noopener" aria-label="Bluesky">
+                      <img src="/img/new-social/bluesky-mark-white.svg" alt="Bluesky">
+                    </a>
+                    <a href="https://x.com/_llm_d_" target="_blank" rel="noreferrer noopener" aria-label="X / Twitter">
+                      <img src="/img/new-social/x-mark-white.png" alt="X / Twitter">
+                    </a>
+                    <a href="https://www.youtube.com/@llm-d-project" target="_blank" rel="noreferrer noopener" aria-label="YouTube">
+                      <img src="/img/new-social/youtube-mark-white.svg" alt="YouTube">
+                    </a>
+                  </div>
+                  <div class="footer-cncf">
+                    <img class="footer-cncf-logo" src="/img/CNCF-logo.svg" alt="CNCF">
+                    <span>llm-d is a CNCF Sandbox project</span>
+                  </div>
+                  <div class="footer-socials-cta">
+                    <a href="/slack" target="_self" rel="noreferrer noopener" aria-label="Join our Slack">
+                      <span class="button-link">Join our Slack</span>
+                    </a>
+                  </div>
+                </div>
+              </li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><a href="https://cncf.io" target="_blank" rel="noopener noreferrer" class="footerLogoLink_BH7S"><img src="/llm-d.github.io/img/cncf-color.svg" alt="llm-d Logo" class="footer__logo footer-logo themedComponent_mlkZ themedComponent--light_NVdE" width="240" style="margin-right:10px"><img src="/llm-d.github.io/img/cncf-white.png" alt="llm-d Logo" class="footer__logo footer-logo themedComponent_mlkZ themedComponent--dark_xIcU" width="240" style="margin-right:10px"></a></div><div class="footer__copyright">Copyright llm-d a Series of LF Projects, LLC. Apache 2.0 License.<br>        We are a Cloud Native Computing Foundation sandbox project.<br>        For website terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank" rel="noreferrer noopener">https://lfprojects.org/policies/</a></div></div></div></footer></div>
+</body>
+</html>

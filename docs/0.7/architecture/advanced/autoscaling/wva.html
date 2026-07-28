@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-0.7 docs-doc-page docs-doc-id-architecture/advanced/autoscaling/wva" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.2">
+<title data-rh="true">Workload Variant Autoscaling | llm-d</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://sagearc.github.io/llm-d.github.io/img/llm-d-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://sagearc.github.io/llm-d.github.io/img/llm-d-social-card.jpg"><meta data-rh="true" property="og:url" content="https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="0.7"><meta data-rh="true" name="docusaurus_tag" content="docs-default-0.7"><meta data-rh="true" name="docsearch:version" content="0.7"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-0.7"><meta data-rh="true" property="og:title" content="Workload Variant Autoscaling | llm-d"><meta data-rh="true" name="description" content="Functionality"><meta data-rh="true" property="og:description" content="Functionality"><link data-rh="true" rel="icon" href="/llm-d.github.io/img/llm-d-favicon.png"><link data-rh="true" rel="canonical" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva"><link data-rh="true" rel="alternate" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva" hreflang="en"><link data-rh="true" rel="alternate" href="https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Concepts (Architecture)","item":"https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/"},{"@type":"ListItem","position":2,"name":"Autoscaling","item":"https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/"},{"@type":"ListItem","position":3,"name":"Workload Variant Autoscaling","item":"https://sagearc.github.io/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva"}]}</script><link rel="alternate" type="application/rss+xml" href="/llm-d.github.io/blog/rss.xml" title="llm-d RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/llm-d.github.io/blog/atom.xml" title="llm-d Atom Feed"><link rel="stylesheet" href="/llm-d.github.io/assets/css/styles.b83d42ef.css">
+<script src="/llm-d.github.io/assets/js/runtime~main.cb58213d.js" defer="defer"></script>
+<script src="/llm-d.github.io/assets/js/main.4e5fa13b.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())</script><div id="__docusaurus"><link rel="preload" as="image" href="/llm-d.github.io/img/llm-d-logotype-and-icon.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/llm-d-logotype-and-icon-dark.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/cncf-color.svg"><link rel="preload" as="image" href="/llm-d.github.io/img/cncf-white.png"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><div class="theme-announcement-bar announcementBar_mb4j" style="color:#ffffff" role="banner"><div class="announcementBarPlaceholder_vyr4"></div><div class="content_knG7 announcementBarContent_xLdY">🎉 <b>llm-d 0.8 is here!</b> Multimodal, batch &amp; flow-control graduate to production, with broader accelerator support and initial RL. <a href="/docs/getting-started/quickstart"><b>See what's new →</b></a></div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/llm-d.github.io/"><div class="navbar__logo"><img src="/llm-d.github.io/img/llm-d-logotype-and-icon.svg" alt="llm-d" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/llm-d.github.io/img/llm-d-logotype-and-icon-dark.svg" alt="llm-d" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/llm-d.github.io/docs">Docs</a><a class="navbar__item navbar__link" href="/llm-d.github.io/blog">Blog</a><a class="navbar__item navbar__link" href="/llm-d.github.io/community">Contributing</a><div class="navbar__item dropdown dropdown--hoverable"><a class="navbar__link" aria-haspopup="true" aria-expanded="false" role="button" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva">v0.7</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/llm-d.github.io/docs">v0.8 (latest)</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva">v0.7</a></li><li><a class="dropdown__link" href="/llm-d.github.io/docs/dev">dev</a></li></ul></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/llm-d/llm-d" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-github-stars" aria-label="GitHub repository"><span class="header-github-stars__icon" aria-hidden="true"></span></a><a href="https://llm-d.ai/slack" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-slack-link" aria-label="llm-d Slack">Join Slack<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7"><span class="categoryLinkLabel_W154">Getting Started</span></a><button aria-label="Collapse sidebar category &#x27;Getting Started&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/getting-started/quickstart"><span class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/accelerators"><span class="linkLabel_WmDU">Supported Accelerators</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/getting-started/artifacts"><span class="linkLabel_WmDU">Artifacts</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/well-lit-paths"><span class="categoryLinkLabel_W154">Well-Lit Paths</span></a><button aria-label="Collapse sidebar category &#x27;Well-Lit Paths&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/optimized-baseline"><span class="linkLabel_WmDU">Optimized Baseline</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/predicted-latency"><span class="linkLabel_WmDU">Predicted Latency-Based Scheduling</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/precise-prefix-cache-aware"><span class="linkLabel_WmDU">Precise Prefix Cache Aware Routing</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/tiered-prefix-cache"><span class="linkLabel_WmDU">Tiered Prefix Cache</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/pd-disaggregation"><span class="linkLabel_WmDU">P/D Disaggregation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/wide-expert-parallelism"><span class="linkLabel_WmDU">Multi-Node Wide Expert Parallelism</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/flow-control"><span class="linkLabel_WmDU">Flow Control</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/workload-autoscaling"><span class="linkLabel_WmDU">Workload Autoscaling</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/asynchronous-processing"><span class="linkLabel_WmDU">Asynchronous Processing</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/well-lit-paths/experimental/batch-gateway"><span class="linkLabel_WmDU">Batch Gateway</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/llm-d.github.io/docs/0.7/architecture"><span class="categoryLinkLabel_W154">Concepts (Architecture)</span></a><button aria-label="Collapse sidebar category &#x27;Concepts (Architecture)&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/core/inferencepool"><span class="categoryLinkLabel_W154">Core</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/disaggregation"><span class="categoryLinkLabel_W154">Capabilities</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/disaggregation"><span class="categoryLinkLabel_W154">Disaggregation</span></a><button aria-label="Expand sidebar category &#x27;Disaggregation&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/latency-predictor"><span class="linkLabel_WmDU">Latency Predictor</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/kv-management"><span class="categoryLinkLabel_W154">KV Cache Management</span></a><button aria-label="Expand sidebar category &#x27;KV Cache Management&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling"><span class="categoryLinkLabel_W154">Autoscaling</span></a><button aria-label="Collapse sidebar category &#x27;Autoscaling&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/wva"><span class="linkLabel_WmDU">Workload Variant Autoscaling</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/hpa-keda"><span class="linkLabel_WmDU">EPP HPA/KEDA Integration</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" tabindex="0" href="/llm-d.github.io/docs/0.7/architecture/advanced/batch"><span class="categoryLinkLabel_W154">Batch Processing</span></a><button aria-label="Expand sidebar category &#x27;Batch Processing&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/monitoring"><span class="categoryLinkLabel_W154">Operations &amp; Monitoring</span></a><button aria-label="Expand sidebar category &#x27;Operations &amp; Monitoring&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/llm-d.github.io/docs/0.7/infra-providers"><span class="categoryLinkLabel_W154">Infrastructure &amp; Environments</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/llm-d.github.io/docs/0.7/api-reference"><span class="categoryLinkLabel_W154">References</span></a><button aria-label="Expand sidebar category &#x27;References&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/llm-d.github.io/docs/0.7/proposals/llm-d"><span class="categoryLinkLabel_W154">Proposals</span></a></div></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="theme-doc-version-banner alert alert--warning margin-bottom--md" role="alert"><div>This is documentation for <!-- -->llm-d<!-- --> <b>v0.7</b>, which is no longer actively maintained.</div><div class="margin-top--md">For up-to-date documentation, see the <b><a href="/llm-d.github.io/docs">latest version</a></b> (<!-- -->v0.8 (latest)<!-- -->).</div></div><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/llm-d.github.io/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/llm-d.github.io/docs/0.7/architecture"><span>Concepts (Architecture)</span></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Capabilities</span></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling"><span>Autoscaling</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Workload Variant Autoscaling</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: v0.7</span><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Workload Variant Autoscaling</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="functionality">Functionality<a href="#functionality" class="hash-link" aria-label="Direct link to Functionality" title="Direct link to Functionality" translate="no">​</a></h2>
+<p>The Workload Variant Autoscaler (WVA) is an optimizer and a Kubernetes controller that automatically scales LLM inference workloads based on real-time resource utilization and performance metrics. As an optimizer, it analyzes supply and demand signals across all InferencePool variants to produce globally cost-efficient scaling decisions. As a controller, it reconciles those decisions by managing the replica count of model-serving deployments (Deployments, StatefulSets, or LeaderWorkerSets), observing vLLM metrics scraped via Prometheus.</p>
+<p>WVA introduces the concept of <strong>variants</strong> -- multiple model servers in an InferencePool that all serve the same base model but differ in hardware configuration (e.g., GPU type), serving configuration (e.g., tensor parallelism, max batch size, quantization), or both, each with an associated cost. The autoscaler optimizes across variants to minimize total cost while meeting capacity or latency requirements.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>WVA assumes a 1:1:1 relationship between InferencePool, Endpoint Picker (EPP), and base model. All variants within an InferencePool share the same EPP and therefore the same EPP metrics (e.g., request queue size).</p></div></div>
+<p>WVA provides two main scaling analyzers:</p>
+<ul>
+<li class="">
+<p><strong>Saturation Analyzer</strong> -- Scales based on resource saturation signals (KV cache utilization, request queue depth, and token-level capacity). When the system detects that model servers are saturated (running out of KV cache space or building up queues), it triggers scale-up on the cheapest available variant. When spare capacity is detected, it scales down the most expensive variant. This is the default analyzer. It has two sub-variants: <code>saturation-percentage-based</code> (default) and <code>saturation-token-based</code> (experimental).</p>
+</li>
+<li class="">
+<p><strong>SLO Analyzer (Queueing Model)</strong> <em>(Experimental)</em> -- Scales based on latency SLO targets using queueing theory. It uses a Kalman filter to learn hardware-specific performance parameters online, then applies a state-dependent Markovian queueing model to determine the maximum sustainable request rate per replica that meets target TTFT (Time To First Token) and ITL (Inter-Token Latency). The desired replica count is computed as the ratio of observed arrival rate to this capacity.</p>
+</li>
+</ul>
+<p>Both analyzers integrate with a pipeline that includes cost-aware optimization, scale-to-zero enforcement, and optional GPU resource limiting.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="design">Design<a href="#design" class="hash-link" aria-label="Direct link to Design" title="Direct link to Design" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="relation-to-llm-d-components">Relation to llm-d Components<a href="#relation-to-llm-d-components" class="hash-link" aria-label="Direct link to Relation to llm-d Components" title="Direct link to Relation to llm-d Components" translate="no">​</a></h3>
+<p>The following diagram shows how WVA fits into the overall llm-d architecture:</p>
+<p><img decoding="async" loading="lazy" alt="WVA High-Level Architecture" src="/llm-d.github.io/assets/images/wva-architecture-afccdca4305517f2087800a2d8b199db.svg" width="880" height="502" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="scaling-engine-architecture">Scaling Engine Architecture<a href="#scaling-engine-architecture" class="hash-link" aria-label="Direct link to Scaling Engine Architecture" title="Direct link to Scaling Engine Architecture" translate="no">​</a></h3>
+<p>The WVA scaling engine runs as a background goroutine alongside the Kubernetes controller, communicating scaling decisions through an in-memory decision cache and a trigger channel.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>The engine supports both a <code>saturation-percentage-based</code> and <code>saturation-token-based</code> analysis path. <code>saturation-percentage-based</code> is the default. <code>saturation-token-based</code> is an experimental token-based approach that is not yet production-ready. The architecture described here covers both pipelines.</p></div></div>
+<p>The engine follows a three-stage pipeline pattern:</p>
+<p><img decoding="async" loading="lazy" alt="Scaling Engine Pipeline" src="/llm-d.github.io/assets/images/scaling-engine-pipeline-0683a2afef071d7663f85eee5c37a382.svg" width="880" height="800" class="img_ev3q"></p>
+<p><strong>Pipeline stages:</strong></p>
+<ol>
+<li class="">
+<p><strong>Analyzer</strong> -- Each analyzer produces capacity signals (required capacity, spare capacity) and a priority score per InferencePool. The analyzer does not make scaling decisions directly; it quantifies how much capacity is needed or can be freed.</p>
+</li>
+<li class="">
+<p><strong>Optimizer</strong> -- The optimizer receives scaling requests (one per InferencePool) and produces variant decisions specifying the target replica count per variant. Two modes exist:</p>
+<ul>
+<li class=""><strong>Cost-aware</strong> (default, unlimited mode): Processes each InferencePool independently. Scales up the most cost-efficient variant; scales down the most expensive variant.</li>
+<li class=""><strong>Greedy-by-score</strong> (limited mode, <code>enableLimiter: true</code>): Fair-shares available GPU resources across all InferencePools based on priority scores.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Enforcer</strong> -- Applies post-optimization policies: scale-to-zero when an InferencePool is idle (no requests in the retention period), or minimum replica enforcement (at least 1 replica on the cheapest variant) when scale-to-zero is disabled.</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="saturation-analyzer">Saturation Analyzer<a href="#saturation-analyzer" class="hash-link" aria-label="Direct link to Saturation Analyzer" title="Direct link to Saturation Analyzer" translate="no">​</a></h3>
+<p>The saturation analyzer determines scaling needs based on how saturated the InferencePools are.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="saturation-percentage-based----default"><code>saturation-percentage-based</code> -- Default<a href="#saturation-percentage-based----default" class="hash-link" aria-label="Direct link to saturation-percentage-based----default" title="Direct link to saturation-percentage-based----default" translate="no">​</a></h4>
+<p>The <code>saturation-percentage-based</code> analyzer uses percentage thresholds on two dimensions:</p>
+<ul>
+<li class=""><strong>KV cache utilization</strong> -- A replica is saturated if the KV cache usage meets or exceeds the threshold (default 0.80).</li>
+<li class=""><strong>Queue length</strong> -- A replica is saturated if the queue length meets or exceeds the threshold (default 5).</li>
+</ul>
+<p>Scale-up triggers when the average spare KV capacity drops below the spare trigger (default 0.10) or the average spare queue capacity drops below the queue spare trigger (default 3). It adds 1 replica to the cheapest variant, skipping variants with pending replicas.</p>
+<p>Scale-down is safe when at least 2 non-saturated replicas exist and a simulated N/(N-1) load redistribution still leaves adequate headroom. It removes 1 replica from the most expensive variant.</p>
+<p><code>saturation-percentage-based</code> blocks all scaling when any variant is transitioning (desired != current replicas).</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="saturation-token-based----experimental"><code>saturation-token-based</code> -- Experimental<a href="#saturation-token-based----experimental" class="hash-link" aria-label="Direct link to saturation-token-based----experimental" title="Direct link to saturation-token-based----experimental" translate="no">​</a></h4>
+<p>The <code>saturation-token-based</code> analyzer uses absolute token counts instead of percentages, enabling cross-variant capacity comparison and more precise scaling.</p>
+<p>Each replica&#x27;s capacity is modeled with two bounds:</p>
+<ul>
+<li class=""><strong>k1 (memory-bound)</strong>: Total KV capacity in tokens multiplied by the KV cache threshold -- how many tokens the KV cache can hold.</li>
+<li class=""><strong>k2 (compute-bound)</strong>: determined via a priority chain:
+<ol>
+<li class=""><strong>Observed</strong>: When the queue is saturated (queue length meets or exceeds the threshold), the current tokens in use is taken directly.</li>
+<li class=""><strong>Historical</strong>: Rolling average from previous observations (window size 10).</li>
+<li class=""><strong>Derived from deployment args</strong>: Computed from the effective max batched tokens, max num seqs, and average input/output token lengths using a steady-state batching model.</li>
+<li class=""><strong>Fallback</strong>: k1 (memory-only).</li>
+</ol>
+</li>
+</ul>
+<p>The <strong>effective capacity</strong> per replica is the minimum of k1 and k2. Per-variant capacity is aggregated using the median across ready replicas.</p>
+<p><strong>Demand</strong> per replica is the sum of tokens currently in use and the queued requests multiplied by the average input token length. The EPP queue demand (from <code>inference_extension_flow_control_queue_size</code> and <code>inference_extension_flow_control_queue_bytes</code>metrics) is added to the InferencePool-level totals.</p>
+<p>Scaling signals:</p>
+<ul>
+<li class=""><strong>Required capacity</strong>: total demand divided by the scale-up threshold, minus anticipated supply. A positive value means scale-up is needed.</li>
+<li class=""><strong>Spare capacity</strong>: total supply minus total demand divided by the scale-down boundary. A positive value means scale-down is possible.</li>
+</ul>
+<p>Default thresholds: scale-up threshold 0.85, scale-down boundary 0.70.</p>
+<p>Key improvements over <code>saturation-percentage-based</code>:</p>
+<ul>
+<li class="">Token-level granularity enables cross-variant and cross-InferencePool capacity comparison</li>
+<li class="">Dual-bound capacity model (memory + compute) captures both resource bottlenecks</li>
+<li class="">Capacity knowledge is cached for zero-replica variants, enabling accurate cost estimation before scaling</li>
+<li class="">Supports P/D (Prefill/Decode) disaggregation with per-role capacity attribution</li>
+<li class="">Considers EPP queue demand (requests queued before reaching any vLLM pod)</li>
+<li class="">Output-length workload bucketing for compute-bound history (short &lt; 100, medium &lt; 500, long &gt;= 500 tokens)</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="slo-analyzer-queueing-model----experimental">SLO Analyzer (Queueing Model) -- Experimental<a href="#slo-analyzer-queueing-model----experimental" class="hash-link" aria-label="Direct link to SLO Analyzer (Queueing Model) -- Experimental" title="Direct link to SLO Analyzer (Queueing Model) -- Experimental" translate="no">​</a></h3>
+<p>The SLO analyzer scales based on latency targets rather than resource saturation. It is activated by the presence of a <code>wva-queueing-model-config</code> ConfigMap.</p>
+<p>The analyzer operates in three phases:</p>
+<ol>
+<li class="">
+<p><strong>Online Parameter Learning (Tuner)</strong> -- Uses a Kalman filter to learn three hardware-specific parameters from observed metrics:</p>
+<ul>
+<li class=""><strong>alpha</strong>: baseline iteration overhead (ms)</li>
+<li class=""><strong>beta</strong>: per-token compute time (ms)</li>
+<li class=""><strong>gamma</strong>: per-token KV cache memory access time (ms)</li>
+</ul>
+<p>The tuner builds environment snapshots from per-replica metrics (arrival rate, average input/output tokens, average TTFT, average ITL) and runs the Kalman filter to estimate these parameters.</p>
+</li>
+<li class="">
+<p><strong>SLO Target Determination</strong> -- Two approaches:</p>
+<ul>
+<li class=""><strong>Explicit</strong>: From the ConfigMap (<code>targetTTFT</code>, <code>targetITL</code> in milliseconds).</li>
+<li class=""><strong>Inferred</strong> (default): Uses the idle-latency multiplier approach. The target TTFT and ITL are derived by multiplying the predicted idle latency (based on alpha, beta, gamma, and average token lengths) by the SLO multiplier k (default 3.0, giving a target utilization of approximately 0.67).</li>
+<li class=""><strong>Fallback</strong>: Observed TTFT/ITL multiplied by 1.5 headroom, capped at reasonable maximums.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Capacity Computation</strong> -- Uses an M/M/1/k queueing theory model to compute the maximum request rate per replica that meets the SLO targets. The desired replica count is the total arrival rate divided by this maximum rate, rounded up.</p>
+</li>
+</ol>
+<p>Metrics used by the SLO analyzer:</p>
+<ul>
+<li class=""><code>inference_extension_scheduler_attempts_total{status=&quot;success&quot;}</code> -- per-pod arrival rate (requests/sec)</li>
+<li class=""><code>vllm:time_to_first_token_seconds</code> -- TTFT histogram (sum/count for average)</li>
+<li class=""><code>vllm:time_per_output_token_seconds</code> -- ITL histogram (sum/count for average)</li>
+<li class=""><code>vllm:request_generation_tokens</code> -- average output tokens (sum/count)</li>
+<li class=""><code>vllm:request_prompt_tokens</code> -- average input tokens (sum/count)</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="scale-to-and-from-zero">Scale To and From Zero<a href="#scale-to-and-from-zero" class="hash-link" aria-label="Direct link to Scale To and From Zero" title="Direct link to Scale To and From Zero" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="scale-to-zero">Scale-to-Zero<a href="#scale-to-zero" class="hash-link" aria-label="Direct link to Scale-to-Zero" title="Direct link to Scale-to-Zero" translate="no">​</a></h4>
+<p>Scale-to-zero is handled by the <strong>Enforcer</strong> pipeline stage, which runs after the optimizer produces scaling decisions.</p>
+<p>For each InferencePool:</p>
+<ol>
+<li class="">Check if scale-to-zero is enabled (per-inferencepool config &gt; global ConfigMap default &gt; <code>WVA_SCALE_TO_ZERO</code> env var &gt; false).</li>
+<li class="">If enabled, query <code>sum(increase(vllm:request_success_total{...}[retentionPeriod]))</code> for the InferencePool.</li>
+<li class="">If the request count is 0 over the retention period (default 10 minutes), set all variant target replicas to 0.</li>
+<li class="">If scale-to-zero is disabled, ensure at least 1 replica on the cheapest variant.</li>
+</ol>
+<p>Scale-to-zero is skipped entirely when any variant has <code>MinReplicas &gt; 0</code> in the VA spec.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="scale-from-zero">Scale-from-Zero<a href="#scale-from-zero" class="hash-link" aria-label="Direct link to Scale-from-Zero" title="Direct link to Scale-from-Zero" translate="no">​</a></h4>
+<p>Scale-from-zero runs as a separate engine with a fast 100ms polling interval, independent of the main 30-second saturation engine loop. This ensures rapid response to incoming requests for idle InferencePools.</p>
+<p>For each VA with 0 replicas:</p>
+<ol>
+<li class="">Find the matching InferencePool from the datastore.</li>
+<li class="">Query the EPP (Endpoint Picker) metrics source for <code>inference_extension_flow_control_queue_size{target_model_name=&lt;modelID&gt;}</code>.</li>
+<li class="">If queue size &gt; 0 (pending requests exist), scale the deployment directly to 1 replica.</li>
+<li class="">Record the scaling decision and trigger controller reconciliation.</li>
+</ol>
+<p>The scale-from-zero engine processes inactive VAs concurrently with configurable max concurrency.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="metric-collection">Metric Collection<a href="#metric-collection" class="hash-link" aria-label="Direct link to Metric Collection" title="Direct link to Metric Collection" translate="no">​</a></h2>
+<p>WVA collects metrics through a source registry that holds named metrics source implementations. Two types of sources are used:</p>
+<ul>
+<li class=""><strong>Prometheus source</strong> -- Registered at startup. Executes PromQL queries for model server metrics (KV cache utilization, queue depth, latency, etc.).</li>
+<li class=""><strong>Pod scraping sources</strong> -- Added dynamically as InferencePool resources are discovered. When a new pool is set in the datastore, WVA creates a dedicated pod scraping source configured with the pool&#x27;s EPP service name, namespace, and metrics port. These sources are used to collect EPP-level metrics (e.g., flow control queue size) directly from pods rather than through Prometheus. Sources are automatically removed when their associated pool is deleted.</li>
+</ul>
+<p>Each metrics source provides three main capabilities:</p>
+<ul>
+<li class="">Returning the query registry for registering query templates</li>
+<li class="">Executing queries and updating the cache</li>
+<li class="">Retrieving a cached value for a query with given parameters</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="registered-queries">Registered Queries<a href="#registered-queries" class="hash-link" aria-label="Direct link to Registered Queries" title="Direct link to Registered Queries" translate="no">​</a></h3>
+<p><strong>Saturation queries</strong> (per-pod, 1-minute windows):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Query Name</th><th>PromQL</th><th>Purpose</th></tr></thead><tbody><tr><td><code>kv_cache_usage</code></td><td><code>max by (pod) (max_over_time(vllm:kv_cache_usage_perc{...}[1m]))</code></td><td>KV cache utilization (0-1)</td></tr><tr><td><code>queue_length</code></td><td><code>max by (pod) (max_over_time(vllm:num_requests_waiting{...}[1m]))</code></td><td>Pending request queue depth</td></tr><tr><td><code>cache_config_info</code></td><td><code>max by (pod, num_gpu_blocks, block_size) (vllm:cache_config_info{...})</code></td><td>KV cache configuration (total capacity)</td></tr><tr><td><code>avg_output_tokens</code></td><td><code>rate(vllm:request_generation_tokens_sum[5m]) / rate(..._count[5m])</code></td><td>Average output token count</td></tr><tr><td><code>avg_input_tokens</code></td><td><code>rate(vllm:request_prompt_tokens_sum[5m]) / rate(..._count[5m])</code></td><td>Average input token count</td></tr><tr><td><code>prefix_cache_hit_rate</code></td><td><code>rate(vllm:prefix_cache_hits[5m]) / rate(vllm:prefix_cache_queries[5m])</code></td><td>Prefix cache hit ratio</td></tr><tr><td><code>scheduler_queue_size</code></td><td><code>sum(inference_extension_flow_control_queue_size{...})</code></td><td>Upstream EPP queue depth</td></tr><tr><td><code>scheduler_queue_bytes</code></td><td><code>sum(inference_extension_flow_control_queue_bytes{...})</code></td><td>Upstream EPP queue bytes</td></tr></tbody></table>
+<p><strong>Queueing model queries</strong> (per-pod, 1-minute windows):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Query Name</th><th>PromQL</th><th>Purpose</th></tr></thead><tbody><tr><td><code>scheduler_dispatch_rate</code></td><td><code>sum by (pod_name) (rate(inference_extension_scheduler_attempts_total{status=&quot;success&quot;,...}[1m]))</code></td><td>Per-pod arrival rate</td></tr><tr><td><code>avg_ttft</code></td><td><code>rate(vllm:time_to_first_token_seconds_sum[1m]) / rate(..._count[1m])</code></td><td>Average time to first token</td></tr><tr><td><code>avg_itl</code></td><td><code>rate(vllm:time_per_output_token_seconds_sum[1m]) / rate(..._count[1m])</code></td><td>Average inter-token latency</td></tr></tbody></table>
+<p><strong>Scale-to-zero query</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Query Name</th><th>PromQL</th><th>Purpose</th></tr></thead><tbody><tr><td><code>model_request_count</code></td><td><code>sum(increase(vllm:request_success_total{...}[retentionPeriod]))</code></td><td>Total requests in retention window</td></tr></tbody></table>
+<p><strong>Scale-from-zero</strong> uses EPP (Endpoint Picker) metrics directly (not via Prometheus):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>Purpose</th></tr></thead><tbody><tr><td><code>inference_extension_flow_control_queue_size</code></td><td>Pending requests in the EPP flow control queue</td></tr></tbody></table>
+<p>The replica metrics collector orchestrates query execution and populates per-pod metric data for consumption by the analyzers.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-variantautoscaling-va-object">The VariantAutoscaling (VA) Object<a href="#the-variantautoscaling-va-object" class="hash-link" aria-label="Direct link to The VariantAutoscaling (VA) Object" title="Direct link to The VariantAutoscaling (VA) Object" translate="no">​</a></h2>
+<p>The VariantAutoscaling (short name: <code>va</code>) is the core CRD that represents an autoscaling configuration for a single InferencePool variant. API group: <code>llmd.ai/v1alpha1</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="spec">Spec<a href="#spec" class="hash-link" aria-label="Direct link to Spec" title="Direct link to Spec" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>scaleTargetRef</code></td><td>object reference</td><td>(required)</td><td>Reference to the scalable resource (Deployment, StatefulSet, or LeaderWorkerSet)</td></tr><tr><td><code>modelID</code></td><td>string</td><td>(required)</td><td>Unique identifier linking this VA to an InferencePool; all VAs with the same value form a variant group</td></tr><tr><td><code>minReplicas</code></td><td>integer</td><td><code>1</code></td><td>Lower bound on replica count. Set to <code>0</code> to enable scale-to-zero</td></tr><tr><td><code>maxReplicas</code></td><td>integer</td><td><code>2</code></td><td>Upper bound on replica count</td></tr><tr><td><code>variantCost</code></td><td>string</td><td><code>&quot;10.0&quot;</code></td><td>Cost per replica for this variant (used in cost-aware optimization)</td></tr></tbody></table>
+<p>Validation: <code>minReplicas &lt;= maxReplicas</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="status">Status<a href="#status" class="hash-link" aria-label="Direct link to Status" title="Direct link to Status" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>desiredOptimizedAlloc.numReplicas</code></td><td>integer</td><td>Target replica count from the optimization engine</td></tr><tr><td><code>desiredOptimizedAlloc.lastRunTime</code></td><td>timestamp</td><td>Timestamp of the last optimization run</td></tr><tr><td><code>desiredOptimizedAlloc.accelerator</code></td><td>string</td><td><em>(Deprecated)</em> Accelerator type</td></tr><tr><td><code>actuation.applied</code></td><td>boolean</td><td>Whether the scaling decision was successfully applied</td></tr><tr><td><code>conditions</code></td><td>list of conditions</td><td>Observable state conditions</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="conditions">Conditions<a href="#conditions" class="hash-link" aria-label="Direct link to Conditions" title="Direct link to Conditions" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>TargetResolved</code></td><td>Whether the scale target (Deployment/LWS) was found</td></tr><tr><td><code>MetricsAvailable</code></td><td>Whether vLLM metrics are available from Prometheus</td></tr><tr><td><code>OptimizationReady</code></td><td>Whether the optimization engine ran successfully</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-variant-inferencepool-example">Multi-Variant InferencePool Example<a href="#multi-variant-inferencepool-example" class="hash-link" aria-label="Direct link to Multi-Variant InferencePool Example" title="Direct link to Multi-Variant InferencePool Example" translate="no">​</a></h3>
+<p>Multiple VA objects with the same <code>modelID</code> represent variants of the same InferencePool, each served on different hardware. The optimizer considers all variants together:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-background-color:hsl(230, 1%, 98%);--prism-color:hsl(230, 8%, 24%)"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="background-color:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%)"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token comment" style="color:hsl(230, 4%, 64%)"># Variant 1: Cost-effective GPU</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llmd.ai/v1alpha1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> VariantAutoscaling</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">metadata</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llama</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">8b</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">a10g</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">spec</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">scaleTargetRef</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> apps/v1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> Deployment</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llama</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">8b</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">a10g</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">modelID</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token string" style="color:hsl(119, 34%, 47%)">&quot;meta/llama-3.1-8b&quot;</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">minReplicas</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">1</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">maxReplicas</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">10</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">variantCost</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token string" style="color:hsl(119, 34%, 47%)">&quot;5.0&quot;</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">---</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Variant 2: High-performance GPU</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llmd.ai/v1alpha1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> VariantAutoscaling</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">metadata</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llama</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">8b</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">a100</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">spec</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">scaleTargetRef</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> apps/v1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> Deployment</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> llama</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">8b</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">a100</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">modelID</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token string" style="color:hsl(119, 34%, 47%)">&quot;meta/llama-3.1-8b&quot;</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">minReplicas</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">0</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">maxReplicas</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">5</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">variantCost</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token string" style="color:hsl(119, 34%, 47%)">&quot;15.0&quot;</span><br></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration">Configuration<a href="#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration" translate="no">​</a></h2>
+<p>WVA uses a layered configuration system. Configuration sources are resolved in the following precedence: <strong>CLI flags &gt; environment variables &gt; config file &gt; ConfigMap &gt; defaults</strong>.</p>
+<p>ConfigMaps provide dynamic runtime configuration and must have the label <code>app.kubernetes.io/name: workload-variant-autoscaler</code>. They are watched for changes and reloaded dynamically. Namespace-local ConfigMaps override global ConfigMaps, enabling per-namespace tuning.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="scaling-engine-configuration">Scaling Engine Configuration<a href="#scaling-engine-configuration" class="hash-link" aria-label="Direct link to Scaling Engine Configuration" title="Direct link to Scaling Engine Configuration" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="general-architecture">General Architecture<a href="#general-architecture" class="hash-link" aria-label="Direct link to General Architecture" title="Direct link to General Architecture" translate="no">​</a></h4>
+<p>The engine is configured through the <code>wva-saturation-scaling-config</code> ConfigMap. This ConfigMap controls which analyzer is used, the thresholds for scaling decisions, and the optimizer mode.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="saturation-analyzer-configuration">Saturation Analyzer Configuration<a href="#saturation-analyzer-configuration" class="hash-link" aria-label="Direct link to Saturation Analyzer Configuration" title="Direct link to Saturation Analyzer Configuration" translate="no">​</a></h4>
+<p>The <code>wva-saturation-scaling-config</code> ConfigMap controls saturation analyzer behavior. Per-InferencePool overrides are supported using <code>model_id</code> and <code>namespace</code> fields.</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-background-color:hsl(230, 1%, 98%);--prism-color:hsl(230, 8%, 24%)"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="background-color:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%)"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> v1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> ConfigMap</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">metadata</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> wva</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">saturation</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">scaling</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">config</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">labels</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">app.kubernetes.io/name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> workload</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">variant</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">autoscaler</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">data</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">default</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    # Analyzer selection: &quot;&quot; or omit for saturation-percentage-based (default), &quot;saturation&quot; for saturation-token-based (experimental)</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    analyzerName: &quot;saturation&quot;</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># saturation-percentage-based thresholds (used when analyzerName is &quot;&quot; or omitted)</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kvCacheThreshold</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">0.80</span><span class="token plain">        </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># KV cache saturation threshold (0-1)</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">queueLengthThreshold</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">5</span><span class="token plain">       </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Queue depth saturation threshold</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kvSpareTrigger</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">0.10</span><span class="token plain">          </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Scale-up trigger: spare KV capacity below this</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">queueSpareTrigger</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">3</span><span class="token plain">          </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Scale-up trigger: spare queue capacity below this</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># saturation-token-based thresholds (used when analyzerName is &quot;saturation&quot;)</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">scaleUpThreshold</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">0.85</span><span class="token plain">        </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Utilization above this triggers scale-up</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">scaleDownBoundary</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">0.70</span><span class="token plain">       </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Utilization below this allows scale-down</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Optimizer mode</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">enableLimiter</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:hsl(230, 8%, 24%);font-weight:bold">false</span><span class="token plain">          </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># false: CostAwareOptimizer, true: GreedyByScoreOptimizer</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">priority</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token number" style="color:hsl(35, 99%, 36%)">1.0</span><span class="token plain">                 </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Model priority for GreedyByScore (default 1.0)</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Per-model override example</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">llama-override</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    model_id: &quot;meta/llama-3.1-8b&quot;</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    namespace: &quot;llm-inference&quot;</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    scaleUpThreshold: 0.90</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    scaleDownBoundary: 0.75</span><br></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="slo-analyzer-queueing-model-configuration----experimental">SLO Analyzer (Queueing Model) Configuration -- Experimental<a href="#slo-analyzer-queueing-model-configuration----experimental" class="hash-link" aria-label="Direct link to SLO Analyzer (Queueing Model) Configuration -- Experimental" title="Direct link to SLO Analyzer (Queueing Model) Configuration -- Experimental" translate="no">​</a></h4>
+<p>The SLO analyzer is activated by the presence of a <code>wva-queueing-model-config</code> ConfigMap with a <code>&quot;default&quot;</code> entry. When present, it takes priority over the saturation analyzer.</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-background-color:hsl(230, 1%, 98%);--prism-color:hsl(230, 8%, 24%)"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="background-color:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%)"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> v1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> ConfigMap</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">metadata</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> wva</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">queueing</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">model</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">config</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">labels</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">app.kubernetes.io/name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> workload</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">variant</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">autoscaler</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">data</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">default</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    sloMultiplier: 3.0            # k factor (target utilization rho = 1 - 1/k)</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    tuningEnabled: true           # Enable Kalman filter for online parameter learning</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Per-model override with explicit SLO targets</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">llama-slo</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    model_id: &quot;meta/llama-3.1-8b&quot;</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    namespace: &quot;llm-inference&quot;</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    targetTTFT: 500               # Target TTFT in milliseconds</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    targetITL: 100                # Target ITL in milliseconds</span><br></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="scale-to-zero-configuration">Scale-to-Zero Configuration<a href="#scale-to-zero-configuration" class="hash-link" aria-label="Direct link to Scale-to-Zero Configuration" title="Direct link to Scale-to-Zero Configuration" translate="no">​</a></h4>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-background-color:hsl(230, 1%, 98%);--prism-color:hsl(230, 8%, 24%)"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="background-color:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%)"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token key atrule" style="color:hsl(35, 99%, 36%)">apiVersion</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> v1</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">kind</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> ConfigMap</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">metadata</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> wva</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">model</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">scale</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">to</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">zero</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">config</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">labels</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">    </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">app.kubernetes.io/name</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> workload</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">variant</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">-</span><span class="token plain">autoscaler</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain"></span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">data</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">default</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    enable_scale_to_zero: true</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    retention_period: &quot;10m&quot;       # Period to check for model inactivity</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token comment" style="color:hsl(230, 4%, 64%)"># Disable scale-to-zero for a specific model</span><span class="token plain"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token plain">  </span><span class="token key atrule" style="color:hsl(35, 99%, 36%)">llama-override</span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:hsl(119, 34%, 47%)">|</span><span class="token scalar string" style="color:hsl(119, 34%, 47%)"></span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    model_id: &quot;meta/llama-3.1-8b&quot;</span><br></div><div class="token-line" style="color:hsl(230, 8%, 24%)"><span class="token scalar string" style="color:hsl(119, 34%, 47%)">    enable_scale_to_zero: false</span><br></div></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="metric-collection-configuration">Metric Collection Configuration<a href="#metric-collection-configuration" class="hash-link" aria-label="Direct link to Metric Collection Configuration" title="Direct link to Metric Collection Configuration" translate="no">​</a></h3>
+<p>Prometheus connectivity is configured via the unified config:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Source</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td>Prometheus URL</td><td>Config file / CLI</td><td>--</td><td>Base URL for Prometheus API</td></tr><tr><td>TLS config</td><td>Config file</td><td>--</td><td>TLS certificates for Prometheus connection</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="va-object-configuration">VA Object Configuration<a href="#va-object-configuration" class="hash-link" aria-label="Direct link to VA Object Configuration" title="Direct link to VA Object Configuration" translate="no">​</a></h3>
+<p>The VA object itself is the primary user-facing configuration surface. See the <a href="#the-variantautoscaling-va-object" class="">VA Object section</a> for the full spec reference.</p>
+<p>Key configuration decisions per VA:</p>
+<ul>
+<li class=""><strong><code>minReplicas: 0</code></strong> enables scale-to-zero for this variant.</li>
+<li class=""><strong><code>variantCost</code></strong> determines scaling preference order: cheaper variants scale up first, expensive variants scale down first.</li>
+<li class="">Multiple VAs with the same <strong><code>modelID</code></strong> form a variant group for an InferencePool, optimized together.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="cli-flags">CLI Flags<a href="#cli-flags" class="hash-link" aria-label="Direct link to CLI Flags" title="Direct link to CLI Flags" translate="no">​</a></h3>
+<p>Key controller flags:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>--config-file</code></td><td>--</td><td>Path to configuration file</td></tr><tr><td><code>--metrics-bind-address</code></td><td><code>:8080</code></td><td>Metrics endpoint bind address</td></tr><tr><td><code>--health-probe-bind-address</code></td><td><code>:8081</code></td><td>Health probe bind address</td></tr><tr><td><code>--leader-elect</code></td><td><code>false</code></td><td>Enable leader election for HA</td></tr><tr><td><code>--watch-namespace</code></td><td>--</td><td>Restrict to a single namespace</td></tr><tr><td><code>--leader-election-lease-duration</code></td><td><code>60s</code></td><td>Leader election lease duration</td></tr><tr><td><code>--leader-election-renew-deadline</code></td><td><code>50s</code></td><td>Leader election renew deadline</td></tr><tr><td><code>--rest-client-timeout</code></td><td><code>60s</code></td><td>Kubernetes API client timeout</td></tr></tbody></table></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Autoscaling</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/llm-d.github.io/docs/0.7/architecture/advanced/autoscaling/hpa-keda"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">EPP HPA/KEDA Integration</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#functionality" class="table-of-contents__link toc-highlight">Functionality</a></li><li><a href="#design" class="table-of-contents__link toc-highlight">Design</a><ul><li><a href="#relation-to-llm-d-components" class="table-of-contents__link toc-highlight">Relation to llm-d Components</a></li><li><a href="#scaling-engine-architecture" class="table-of-contents__link toc-highlight">Scaling Engine Architecture</a></li><li><a href="#saturation-analyzer" class="table-of-contents__link toc-highlight">Saturation Analyzer</a></li><li><a href="#slo-analyzer-queueing-model----experimental" class="table-of-contents__link toc-highlight">SLO Analyzer (Queueing Model) -- Experimental</a></li><li><a href="#scale-to-and-from-zero" class="table-of-contents__link toc-highlight">Scale To and From Zero</a></li></ul></li><li><a href="#metric-collection" class="table-of-contents__link toc-highlight">Metric Collection</a><ul><li><a href="#registered-queries" class="table-of-contents__link toc-highlight">Registered Queries</a></li></ul></li><li><a href="#the-variantautoscaling-va-object" class="table-of-contents__link toc-highlight">The VariantAutoscaling (VA) Object</a><ul><li><a href="#spec" class="table-of-contents__link toc-highlight">Spec</a></li><li><a href="#status" class="table-of-contents__link toc-highlight">Status</a></li><li><a href="#conditions" class="table-of-contents__link toc-highlight">Conditions</a></li><li><a href="#multi-variant-inferencepool-example" class="table-of-contents__link toc-highlight">Multi-Variant InferencePool Example</a></li></ul></li><li><a href="#configuration" class="table-of-contents__link toc-highlight">Configuration</a><ul><li><a href="#scaling-engine-configuration" class="table-of-contents__link toc-highlight">Scaling Engine Configuration</a></li><li><a href="#metric-collection-configuration" class="table-of-contents__link toc-highlight">Metric Collection Configuration</a></li><li><a href="#va-object-configuration" class="table-of-contents__link toc-highlight">VA Object Configuration</a></li><li><a href="#cli-flags" class="table-of-contents__link toc-highlight">CLI Flags</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/docs" class="footer__link-item">Getting Started</a></li><li class="footer__item"><a href="/docs/architecture" class="footer__link-item">Architecture</a></li><li class="footer__item"><a href="/docs/well-lit-paths" class="footer__link-item">Well-Lit Paths</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/community" class="footer__link-item">Contact us</a></li><li class="footer__item"><a href="/community/contribute" class="footer__link-item">Contributing</a></li><li class="footer__item"><a href="/community/code-of-conduct" class="footer__link-item">Code of Conduct</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="/blog" class="footer__link-item">Blog</a></li><li class="footer__item"><a href="https://www.redhat.com/en/about/privacy-policy" target="_blank" rel="noopener noreferrer" class="footer__link-item">Privacy Policy<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Social</div><ul class="footer__items clean-list"><li class="footer__item">
+                <div class="footer-socials" role="navigation" aria-label="Social links">
+                  <div class="footer-socials-row">
+                    <a href="https://github.com/llm-d/" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+                      <img src="/img/new-social/github-mark-white.png" alt="GitHub">
+                    </a>
+                    <a href="https://linkedin.com/company/llm-d" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+                      <img src="/img/new-social/linkedin-mark-white.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://llm-d.slack.com" target="_blank" rel="noreferrer noopener" aria-label="Slack">
+                      <img src="/img/new-social/slack-mark-white.png" alt="Slack">
+                    </a>
+                    <a href="https://www.reddit.com/r/llm_d/" target="_blank" rel="noreferrer noopener" aria-label="Reddit">
+                      <img src="/img/new-social/reddit-mark-white.png" alt="Reddit">
+                    </a>
+                    <a href="https://bsky.app/profile/llm-d.ai" target="_blank" rel="noreferrer noopener" aria-label="Bluesky">
+                      <img src="/img/new-social/bluesky-mark-white.svg" alt="Bluesky">
+                    </a>
+                    <a href="https://x.com/_llm_d_" target="_blank" rel="noreferrer noopener" aria-label="X / Twitter">
+                      <img src="/img/new-social/x-mark-white.png" alt="X / Twitter">
+                    </a>
+                    <a href="https://www.youtube.com/@llm-d-project" target="_blank" rel="noreferrer noopener" aria-label="YouTube">
+                      <img src="/img/new-social/youtube-mark-white.svg" alt="YouTube">
+                    </a>
+                  </div>
+                  <div class="footer-cncf">
+                    <img class="footer-cncf-logo" src="/img/CNCF-logo.svg" alt="CNCF">
+                    <span>llm-d is a CNCF Sandbox project</span>
+                  </div>
+                  <div class="footer-socials-cta">
+                    <a href="/slack" target="_self" rel="noreferrer noopener" aria-label="Join our Slack">
+                      <span class="button-link">Join our Slack</span>
+                    </a>
+                  </div>
+                </div>
+              </li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><a href="https://cncf.io" target="_blank" rel="noopener noreferrer" class="footerLogoLink_BH7S"><img src="/llm-d.github.io/img/cncf-color.svg" alt="llm-d Logo" class="footer__logo footer-logo themedComponent_mlkZ themedComponent--light_NVdE" width="240" style="margin-right:10px"><img src="/llm-d.github.io/img/cncf-white.png" alt="llm-d Logo" class="footer__logo footer-logo themedComponent_mlkZ themedComponent--dark_xIcU" width="240" style="margin-right:10px"></a></div><div class="footer__copyright">Copyright llm-d a Series of LF Projects, LLC. Apache 2.0 License.<br>        We are a Cloud Native Computing Foundation sandbox project.<br>        For website terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank" rel="noreferrer noopener">https://lfprojects.org/policies/</a></div></div></div></footer></div>
+</body>
+</html>
