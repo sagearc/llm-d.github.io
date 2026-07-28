@@ -122,7 +122,7 @@ const config = {
           onUntruncatedBlogPosts: 'ignore',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: require.resolve('./src/css/custom.css'),
         },
         sitemap: {
           changefreq: 'weekly',
